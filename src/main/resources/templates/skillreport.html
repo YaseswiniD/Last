@@ -1,130 +1,55 @@
-<!--  <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Skills Report</title>
-     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-
-        h2 {
-            color: #007bff;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 80%;
-            margin: 20px auto;
-        }
-
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #ddd;
-        }
-    </style>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Function to convert HTML table to CSV
-            function downloadCSV() {
-                var csvContent = [];
-                var headers = [];
-
-                // Get table headers
-                $('table th').each(function () {
-                    headers.push($(this).text());
-                });
-                csvContent.push(headers.join(','));
-
-                // Get table rows
-                $('table tbody tr').each(function () {
-                    var row = [];
-                    $(this).find('td').each(function () {
-                        row.push($(this).text());
-                    });
-                    csvContent.push(row.join(','));
-                });
-
-                // Create a Blob and download CSV file
-                var blob = new Blob([csvContent.join('\n')], { type: 'text/csv;charset=utf-8;' });
-                var link = document.createElement("a");
-                var url = URL.createObjectURL(blob);
-                link.setAttribute("href", url);
-                link.setAttribute("download", "skills_report.csv");
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-
-            // Attach the downloadCSV function to the download button click event
-            $('#downloadButton').click(function () {
-                downloadCSV();
-            });
-        });
-    </script>
-</head>
-<body>
-    <h2>Skills Report</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Skill Name</th>
-                <th>Subdomain</th>
-                <th>Domain</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="skill : ${skills}">
-                <td th:text="${skill.skillid}"></td>
-                <td th:text="${skill.skillname}"></td>
-                <td th:text="${skill.subdomain}"></td>
-                <td th:text="${skill.domain}"></td>
-               
-            </tr>
-            
-        </tbody>
-    </table>
-     <button id="downloadButton">Download CSV</button>
-            
-</body>
-</html> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skills Report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 20px;
+            margin: 2px;
+            background-color: #f0f0f0; /* Set background color */
         }
 
-        h2 {
-            color: #007bff;
+        .navbar {
+            background-color: #a2c1e4;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        .navbar img {
+            width: 158px;
+            height: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 10px;
+            padding: 8px 12px;
+            background-color: #4f4f51;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover {
+            background-color: #0056b3;
+        }
+
+       h2{
+       color: #08223d;
+       }
 
         table {
             border-collapse: collapse;
-            width: 80%;
+            width: 100%;
             margin: 20px auto;
         }
 
@@ -135,7 +60,7 @@
         }
 
         th {
-            background-color: #007bff;
+            background-color: #08223d;
             color: white;
         }
 
@@ -146,12 +71,35 @@
         tr:hover {
             background-color: #ddd;
         }
-    </style>
-  
+        
+         .download-button {
+        background-color: #08223d;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
 
+    .download-button:hover {
+        background-color: #376b96;
+    }
+    </style>
 </head>
 <body>
-    <h2>Skills Report</h2>
+    <div class="navbar">
+        <img src="https://torryharris.com/images/this25yersop2.gif" alt="Torry Harris Logo" width="100" height="50">
+        <h2>Skills Report</h2>
+        <div class="nav-links">
+            <a href="/admin-page" class="home-button">Home</a>
+            <a href="/Skilldashboard" class="home-button">Back</a>
+            <a href="/logout" class="logout-button">Logout</a>
+        </div>
+    </div>
+    
     <table border="1">
         <thead>
             <tr>
@@ -172,8 +120,29 @@
             </tr>
         </tbody>
     </table>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+    function downloadHTMLPage() {
+        // Select the table element
+        const table = document.querySelector('table');
 
- 
+        // Define the options for html2pdf
+        const options = {
+            filename: 'report.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+        };
+
+        // Convert the table to PDF
+        html2pdf().from(table).set(options).save();
+    }
+</script>
+    
 </body>
+<!-- Download Report button -->
+    <div style="text-align: center; margin-top: 20px;">
+        <button onclick="downloadHTMLPage()" class="download-button">Download Report</button>
+    </div>
 </html>
-
