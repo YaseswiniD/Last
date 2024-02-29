@@ -5,18 +5,9 @@
   <meta charset="UTF-8">
   <title>Login Page</title>
   <link th:href="@{/css/jj.css}" rel="stylesheet" />
-       <script th:inline="javascript">
-        /*<![CDATA[*/
-        function showAlert() {
-            var alertMessage = /*[[${#strings.contains(param.error, 'BadCredentialsException') ? 'Wrong password, please try again.' : ''}]]*/ '';
-            if (alertMessage) {
-                alert(alertMessage);
-            }
-        }
-        /*]]>*/
-    </script>
+     
 </head>
-<body onload="showAlert()">
+<body>
   <h2 align="center" class="login-title">Employee and Admin Login</h2>
   <div>
   <form th:action="@{/login}"method="post">
