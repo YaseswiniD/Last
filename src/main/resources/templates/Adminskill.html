@@ -2,17 +2,54 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Skill</title>
-     <style>
+    <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
+            background-color: white;
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #a2c1e4;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed; /* Fixed position to stick to the top */
+            top: 0; /* Stick to the top */
+            z-index: 1000; /* Ensure it's above other content */
+        }
+
+        .navbar img {
+            width: 100px;
+            height: 50px;
+        }
+
+        .button-container {
+            margin-right: 20px;
+        }
+
+        .button-container a {
+            margin-left: 10px;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 12px;
+            background-color: #08223d;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-container a:hover {
+            background-color: #376b96;
         }
 
         h2 {
@@ -20,11 +57,13 @@
         }
 
         form {
-            max-width: 400px;
-            background-color: #fff;
+            max-width: 377px; /* Increased max-width for the form */
+            width: 90%; /* Take up 90% of the available width */
+            background-color: lightsteelblue;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 80px; /* Adjusted margin-top to accommodate the fixed header */
         }
 
         label {
@@ -43,7 +82,7 @@
         }
 
         button {
-            background-color: #4caf50;
+            background-color: #08223d;
             color: white;
             padding: 10px 15px;
             border: none;
@@ -52,7 +91,7 @@
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #08223d;
         }
 
         /* Responsive layout for smaller screens */
@@ -71,10 +110,42 @@
             margin-top: 8px;
             display: none; /* Initially hide the new input container */
         }
+        .add-skill-form {
+    max-width: 377px;
+    width: 90%;
+    background-color: lightsteelblue;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-skill-button {
+    background-color: #08223d;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px; /* Adjust as needed */
+}
+        
     </style>
 </head>
 <body>
-   
+    <div class="navbar">
+    <img src="https://torryharris.com/images/this25yersop2.gif" alt="Torry Harris Logo" width="100" height="50">
+        <h2>Add Skill</h2>
+        <div class="button-container">
+            <a href="/admin-page" class="home-button">Home</a>
+            <a href="/Skilldashboard" class="back-button">Back</a>
+            <a href="/logout" class="logout-button">Logout</a>
+        </div>
+    </div>
+
     <form th:action="@{/addSkill}" method="post" onsubmit="return handleFormSubmit()">
         <label for="domain">Domain:</label>
         <select id="domain" name="domain" required onchange="updateSubdomains()">
@@ -97,13 +168,11 @@
         </div>
         <br>
         
-         <br>
         <label for="skillname">Skill Name:</label>
         <input type="text" id="skillname" name="skillname" required>
         <br>
         
-        
-        <button type="submit">Add Skill</button>
+        <button type="submit" class="add-skill-button">Add Skill</button>
     </form>
     <script th:inline="javascript">
         /*<![CDATA[*/
