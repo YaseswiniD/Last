@@ -2,37 +2,77 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skill Details</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
             margin: 0;
             padding: 0;
         }
 
+        .navbar {
+            background-color: #a2c1e4;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar img {
+            width: 100px;
+            height: 50px;
+        }
+
+        .logout-link,
+        .home-link,
+        .back-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            background-color: #4f4f51; /* Set background color for links */
+            margin-right: 10px;
+        }
+
+        .logout-link:hover,
+        .home-link:hover,
+        .back-link:hover {
+            background-color: #376b96; /* Darken the background color on hover */
+        }
+
         h2 {
-            color: #3498db;
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
         }
 
         table {
+            width: 89%;
             border-collapse: collapse;
-            width: 80%;
             margin: 20px auto;
         }
 
         th, td {
-            border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
+            border: 1px solid #ddd; /* Darken the border color */
         }
 
         th {
-            background-color: #3498db;
-            color: white;
+            background-color: #3498db; /* Background color for table heading */
+            color: white; /* Text color for table heading */
         }
 
         tbody tr:nth-child(even) {
@@ -42,12 +82,39 @@
         tbody tr:hover {
             background-color: #e0e0e0;
         }
+        
+         .download-button {
+        background-color: #08223d;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .download-button:hover {
+        background-color: #376b96;
+    }
+    
     </style>
 </head>
 
 <body>
 
-    <h2>Employee Skill Details</h2>
+    <div class="navbar">
+        <img src="https://torryharris.com/images/this25yersop2.gif" alt="Torry Harris Logo">
+        <h2>Employee Skill Details</h2>
+        <div class="logout-container">
+            <a href="/EmpSkillDash" class="back-link">Back</a>
+            <a href="/admin-page" class="home-link">Home</a>
+            <a href="/logout" class="logout-link">Logout</a>
+        </div>
+    </div>
+
+    
 
     <table>
         <thead>
@@ -73,6 +140,29 @@
             </tr>
         </tbody>
     </table>
-</body>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+    function downloadHTMLPage() {
+        // Select the table element
+        const table = document.querySelector('table');
 
+        // Define the options for html2pdf
+        const options = {
+            filename: 'report.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+        };
+
+        // Convert the table to PDF
+        html2pdf().from(table).set(options).save();
+    }
+</script>
+    
+</body>
+<!-- Download Report button -->
+    <div style="text-align: center; margin-top: 20px;">
+        <button onclick="downloadHTMLPage()" class="download-button">Download Report</button>
+    </div>
 </html>
