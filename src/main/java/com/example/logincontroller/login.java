@@ -45,6 +45,10 @@ public class login {
 	@Qualifier("customUserDetailsService")
 	UserDetailsService userDetailsService;
  
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Autowired
 	private LogService logService;
  
@@ -187,9 +191,7 @@ public class login {
 	}
  
 
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+
 	
 	@PostMapping("/registration")
 	public String saveUser(@ModelAttribute("user") Login_det loginDto, Model model) {
@@ -205,6 +207,7 @@ public class login {
 	            existingDetail.setEmpid(loginDto.getEmpid());
 	            existingDetail.setFullname(loginDto.getFullname());
 //	            passwordEncoder.encode(loginDto.getPassword());
+//	                        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 	            existingDetail.setPassword(passwordEncoder.encode(loginDto.getPassword()));
 	            existingDetail.setDesignation(loginDto.getDesignation());
 	         

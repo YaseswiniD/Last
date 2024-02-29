@@ -6,7 +6,10 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
 @Entity
+@Component
 @Table(name = "Login_details", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class Login_det {
 	
