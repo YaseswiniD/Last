@@ -141,6 +141,8 @@
         </tbody>
     </table>
     
+    <canvas id="skillPieChart"></canvas>
+ 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script>
     function downloadHTMLPage() {
@@ -160,9 +162,51 @@
     }
 </script>
     
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var skillCounts = {};
+            var skillElements = document.querySelectorAll('td:nth-child(3)'); // Selecting skill name column
+ 
+            // Count the occurrence of each skill
+            skillElements.forEach(function(element) {
+                var skillName = element.textContent.trim();
+                skillCounts[skillName] = (skillCounts[skillName] || 0) + 1;
+            });
+ 
+            var labels = Object.keys(skillCounts);
+            var data = Object.values(skillCounts);
+ 
+            // Render the pie chart
+            var ctx = document.getElementById('skillPieChart').getContext('2d');
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(255, 159, 64, 0.5)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+        });
+    </script>
 </body>
 <!-- Download Report button -->
     <div style="text-align: center; margin-top: 20px;">
         <button onclick="downloadHTMLPage()" class="download-button">Download Report</button>
     </div>
 </html>
+
+  
