@@ -187,7 +187,7 @@ public class login {
 	public String updateEmployeeDetails(@ModelAttribute("user") LoginDto loginDto, Model model) {
 		logService.updateEmployeeDetails(loginDto);
 		model.addAttribute("message", "Employee details updated successfully!");
-		return "user";
+		return "employee_details";
 	}
  
 
