@@ -296,7 +296,7 @@ public class login {
             String recipientFullname = logrepo.findFullnameByEmpid(senderName); // Fetch fullname by empid
 
             // Encode the reminder message using Base64
-            String reminderWithNames = "From: " + senderName + ", To: " + recipientFullname + ", Message: " + message;
+            String reminderWithNames = "From: "+ recipientFullname + ", Message: " + message;
             String encodedMessage = Base64.getEncoder().encodeToString(reminderWithNames.getBytes());
 
             // Generate a unique cookie name based on recipient ID and timestamp
