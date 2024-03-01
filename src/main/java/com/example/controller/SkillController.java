@@ -103,7 +103,7 @@ public class SkillController {
 	    service.saveSkill(skill);
 
 	    // Redirect to another page or return a response
-	    return "success";
+	    return "addSkillForm";
 	}
 
 	 
